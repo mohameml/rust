@@ -113,3 +113,139 @@
         ```
 
     -   **Performances**: Sur les architectures modernes, `f64` est souvent aussi rapide que `f32`
+
+Voici un **cours structuré sur les types de données (Data Types) en Rust** : `integer`, `float`, `bool`, et `char`, avec définitions, syntaxes, méthodes (dans un tableau), et exemples pratiques.
+
+## 1. **Integer Types**
+
+-   **Définition :**
+
+    > Les types entiers représentent des **valeurs entières** (positives ou négatives, avec ou sans signe).
+
+-   **Syntaxe :**
+
+    ```rust
+    let a: i32 = 10;
+    let b: u8 = 255;
+    ```
+
+-   **Types disponibles :**
+
+    | Type    | Taille  | Signé | Intervalle                        |
+    | ------- | ------- | ----- | --------------------------------- |
+    | `i8`    | 8 bits  | ✅    | -128 à 127                        |
+    | `u8`    | 8 bits  | ❌    | 0 à 255                           |
+    | `i16`   | 16 bits | ✅    | -32_768 à 32_767                  |
+    | `u16`   | 16 bits | ❌    | 0 à 65_535                        |
+    | `i32`   | 32 bits | ✅    | -2^31 à 2^31 - 1                  |
+    | `u32`   | 32 bits | ❌    | 0 à 2^32 - 1                      |
+    | `i64`   | 64 bits | ✅    | ...                               |
+    | `u64`   | 64 bits | ❌    | ...                               |
+    | `isize` | machine | ✅    | selon l'architecture (32/64 bits) |
+    | `usize` | machine | ❌    | idem                              |
+
+-   **Exemple :**
+
+    ```rust
+    fn main() {
+        let age: u8 = 25;
+        let year: i32 = 2025;
+        println!("Age: {}, Year: {}", age, year);
+    }
+    ```
+
+## 2. **Floating-Point Types (float)**
+
+-   **Définition :**
+
+    > Les nombres à **virgule flottante** permettent de représenter des réels.
+
+-   **Syntaxe :**
+
+    ```rust
+    let x: f32 = 3.14;
+    let y: f64 = 2.718281828;
+    ```
+
+-   **Types disponibles :**
+
+    | Type  | Taille  | Précision                            |
+    | ----- | ------- | ------------------------------------ |
+    | `f32` | 32 bits | \~6-7 chiffres                       |
+    | `f64` | 64 bits | \~15-16 chiffres (valeur par défaut) |
+
+-   **Méthodes utiles :**
+
+    | Méthode    | Description                  | Exemple               |
+    | ---------- | ---------------------------- | --------------------- |
+    | `.abs()`   | Valeur absolue               | `(-3.5f64).abs()`     |
+    | `.sqrt()`  | Racine carrée                | `9.0f64.sqrt()`       |
+    | `.powf(x)` | Puissance réelle             | `2.0f64.powf(3.0)`    |
+    | `.floor()` | Plancher (arrondi inférieur) | `3.8.floor()` → `3.0` |
+    | `.ceil()`  | Plafond (arrondi supérieur)  | `3.2.ceil()` → `4.0`  |
+    | `.round()` | Arrondi                      | `3.5.round()` → `4.0` |
+
+-   **Exemple :**
+
+    ```rust
+    fn main() {
+        let pi: f64 = 3.14159;
+        let radius = 5.0;
+        let area = pi * radius.powf(2.0);
+        println!("Aire = {}", area);
+    }
+    ```
+
+## 3. **Boolean (bool)**
+
+-   **Définition :**
+
+    > Représente une valeur **vraie ou fausse**.
+
+-   **Syntaxe :**
+
+    ```rust
+    let is_active: bool = true;
+    ```
+
+-   **Exemple :**
+
+    ```rust
+    fn main() {
+        let is_even = 4 % 2 == 0;
+        if is_even {
+            println!("Nombre pair !");
+        }
+    }
+    ```
+
+## 4. **Character (char)**
+
+-   **Définition :**
+
+    > Un caractère Unicode, entre **' '** (apostrophes), sur 4 octets. Peut contenir des emojis et symboles.
+
+-   **Syntaxe :**
+
+    ```rust
+    let lettre: char = 'A';
+    let emoji: char = '😎';
+    ```
+
+-   **Méthodes utiles :**
+
+    | Méthode            | Description                      | Exemple               |
+    | ------------------ | -------------------------------- | --------------------- |
+    | `.is_alphabetic()` | Vérifie si c’est une lettre      | `'a'.is_alphabetic()` |
+    | `.is_numeric()`    | Vérifie si c’est un chiffre      | `'7'.is_numeric()`    |
+    | `.to_uppercase()`  | Majuscule (renvoie un itérateur) | `'a'.to_uppercase()`  |
+    | `.len_utf8()`      | Taille UTF-8 en octets           | `'€'.len_utf8()` → 3  |
+
+-   **Exemple :**
+
+    ```rust
+    fn main() {
+        let heart: char = '❤';
+        println!("Char: {}", heart);
+    }
+    ```

@@ -1,176 +1,99 @@
-# Cour 02 : **Les Variables:**
+# Cour : **Variables**
 
-## 1.**1️⃣ Variables non initialisées**
+## 1. **Variables & Mutabilité:**
 
--   **Définition**
+-   **Définition :**
 
-    > Une variable **non initialisée** est déclarée mais sans valeur assignée. En Rust, le compilateur interdit leur utilisation pour éviter des comportements indéfinis.
+    > En Rust, les **variables sont immuables** (non modifiables) par défaut. Pour les rendre mutables (modifiables), il faut utiliser le mot-clé `mut`.
 
--   **Syntaxe**
-
-    ```rust
-    let x: i32; // Non initialisée (erreur si utilisée)
-    let _y: i32; // Non initialisée mais ignorée (avertissement)
-    ```
-
--   **Exemple**
+-   **Syntaxe :**
 
     ```rust
-    #[allow(unused_variables)]
-    fn main() {
-        let x: i32 = 5; // Initialisée ✅
-        let _y: i32 = 6; // Ignorée (warning si non utilisée) ⚠️
-        assert_eq!(x, 5);
-        println!("Success!");
-    }
+    let nom_variable = valeur;          // immuable
+    let mut nom_variable = valeur;      // mutable
     ```
 
-## 2.**2️⃣ Variables mutables**
-
--   **Définition**
-
-    > Par défaut, les variables en Rust sont **immutables**. Pour les modifier, utilisez `mut`.
-
--   **Syntaxe**
-
-    ```rust
-    let mut x = 1; // Mutable
-    x += 1; // Modification autorisée
-    ```
-
--   **Exemple**
+-   **Exemple :**
 
     ```rust
     fn main() {
-        let mut z = 1;
-        z += 2;
-        assert_eq!(z, 3); // z vaut maintenant 3
-        println!("Success!");
+        let x = 5;
+        // x = 6; // ❌ erreur : x est immuable
+
+        let mut y = 10;
+        y = 20; // ✅ ok
+        println!("y = {}", y);
     }
     ```
 
-## 3.**3️⃣ Portée (Scope)**
+-   **Remarque :**
 
--   **Définition**
+    > Rust privilégie l'immuabilité pour **la sécurité et la prévisibilité du code**. Rendre une variable mutable doit être une décision explicite.
 
-    > Une variable existe **seulement dans son bloc (`{}`)**. Hors de ce bloc, elle est détruite.
+## 2. **Constantes**
 
--   **Exemple**
+-   **Définition :**
+
+    > Une constante est une **valeur fixe** connue à la compilation, **immuable**, **globale ou locale**, déclarée avec `const`.
+
+-   **Syntaxe :**
+
+    ```rust
+    const NOM_CONSTANTE: Type = valeur;
+    ```
+
+-   **Exemple :**
+
+    ```rust
+    const PI: f64 = 3.14159;
+
+    fn main() {
+        println!("La valeur de PI est {}", PI);
+    }
+    ```
+
+-   **Remarque :**
+
+    -   Une constante **doit avoir un type** explicite.
+    -   Elle peut être utilisée **n’importe où** dans le programme.
+    -   Ne peut pas être le résultat d’une fonction non `const`.
+
+## 3. **Shadowing:**
+
+-   **Définition :**
+
+    Le **shadowing** consiste à redéclarer une variable avec le même nom, ce qui **remplace l’ancienne** dans une nouvelle portée. Cela permet de changer **le type ou la valeur** sans utiliser `mut`.
+
+-   **Syntaxe :**
+
+    ```rust
+    let variable = valeur;
+    let variable = nouvelle_valeur;
+    ```
+
+-   **Exemple :**
 
     ```rust
     fn main() {
-        let x2 = 10;
-        {
-            let y2 = 5;
-            println!("x: {}, y: {}", x2, y2); // ✅ y2 visible ici
-        }
-        // println!("y: {}", y2); // ❌ y2 n'existe plus
-        println!("x: {}", x2); // ✅ x2 toujours visible
-    }
-
-    fn define_x() {
-        let x3 = "hello";
-        println!("{}, world", x3); // x3 visible uniquement ici
+        let x = 5;
+        let x = x + 1;
+        let x = x * 2;
+        println!("x = {}", x); // x = 12
     }
     ```
 
-## 4.**4️⃣ Shadowing (Réutilisation de noms)**
-
--   **Définition**
-
-    > Rust permet de **redéfinir** une variable avec le même nom, masquant la précédente.
-
--   **Syntaxe**
-
-    ```rust
-    let x = 5;
-    let x = x + 1; // Nouveau x (shadowing)
-    ```
-
--   **Exemple**
+    Autre exemple : changer le **type** d'une variable :
 
     ```rust
     fn main() {
-        let x4 = 5;
-        {
-            let x4 = 12; // Shadowing dans ce bloc
-            assert_eq!(x4, 12);
-        }
-        assert_eq!(x4, 5); // Le x4 original est intact
-
-        let x4 = 42; // Nouveau shadowing
-        println!("{}", x4); // Affiche 42
+        let spaces = "   ";
+        let spaces = spaces.len(); // shadowing : maintenant c'est un usize
+        println!("spaces = {}", spaces);
     }
     ```
 
-## 5.**5️⃣ Variables inutilisées**
+-   **Quand est-ce utile ?**
 
--   **Définition**
-
-    > Rust émet un **avertissement** pour les variables déclarées mais non utilisées. Utilisez `_` pour les ignorer.
-
--   **Syntaxe**
-
-    ```rust
-    let _x = 5; // Pas d'avertissement
-    // ou :
-    #[allow(unused_variables)]
-    ```
-
--   **Exemple**
-
-    ```rust
-    #[allow(unused_variables)]
-    fn main() {
-        let _x7 = 5; // Ignorée volontairement
-    }
-    ```
-
-## 6.**6️⃣ Destructuration (Destructuring)**
-
--   **Définition**
-
-    > Permet de **décomposer** un tuple ou un tableau en variables individuelles.
-
--   **Syntaxe**
-
-    ```rust
-    let (x, y) = (1, 2); // x=1, y=2
-    ```
-
--   **Exemple**
-
-    ```rust
-    fn main() {
-        let (mut x, y) = (1, 2);
-        x += 2;
-        assert_eq!(x, 3);
-        assert_eq!(y, 2);
-        println!("Success!");
-    }
-    ```
-
-## 7.**7️⃣ Destructuration avancée**
-
--   **Définition**
-
-    > Utilisation de `..` pour ignorer des éléments lors de la destructuration.
-
--   **Syntaxe**
-
-    ```rust
-    let (x, ..) = (3, 4); // x=3, ignore 4
-    let [.., y] = [1, 2]; // y=2, ignore 1
-    ```
-
--   **Exemple**
-
-    ```rust
-    fn main() {
-        let (x, y);
-        (x, ..) = (3, 4); // x=3
-        [.., y] = [1, 2]; // y=2
-        assert_eq!([x, y], [3, 2]);
-        println!("Success!");
-    }
-    ```
+    -   Quand on veut **réutiliser le même nom** sans mutabilité.
+    -   Quand on veut **changer le type ou la signification** d’une variable dans une nouvelle portée.
+    -   Idéal pour une **chaîne de transformations successives** lisible et sûre.

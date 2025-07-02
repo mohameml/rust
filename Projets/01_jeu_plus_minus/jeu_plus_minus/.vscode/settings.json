@@ -1,0 +1,9 @@
+{
+	// Format automatique à chaque sauvegarde
+	"editor.formatOnSave": true,
+
+	// Utiliser Rust Analyzer comme formateur
+	"[rust]": {
+		"editor.defaultFormatter": "rust-lang.rust-analyzer"
+	}
+}
