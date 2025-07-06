@@ -192,3 +192,47 @@
     ```
 
     > 🧱 Rust interdit le retour de référence à une variable qui sera supprimée — sécurité garantie à **compile-time**.
+
+## 6. **Slices:**
+
+> En Rust, une **slice** est une vue sur une portion continue d'une collection, comme un tableau (`[T; N]`) ou un `Vec<T>`. Elle permet d’accéder à une partie d’une collection sans en prendre la propriété.
+
+-   **Syntaxe de base:**
+
+    ```rust
+    let arr = [10, 20, 30, 40, 50];
+    let slice = &arr[1..4]; // prend les éléments d’indice 1 à 3
+    ```
+
+    -   `&arr[1..4]` → slice contenant `[20, 30, 40]`
+    -   La syntaxe est `&collection[start..end]`, avec `start` inclus et `end` exclus.
+
+-   **Autres variantes:**
+
+    ```rust
+    let slice = &arr[..];     // toute la tranche
+    let slice = &arr[..3];    // du début à l’indice 2
+    let slice = &arr[2..];    // de l’indice 2 jusqu'à la fin
+    let slice = &arr[..=3];    // du début à l’indice 2
+    ```
+
+-   **Type d’une slice:**
+
+    -   Le type d’une slice immutable est `&[T]`.
+    -   Le type d’une slice mutable est `&mut [T]`.
+
+-   **Exemple:**
+
+    ```rust
+    fn increment(slice: &mut [i32]) {
+        for item in slice {
+            *item += 1;
+        }
+    }
+
+    fn main() {
+        let mut data = [1, 2, 3];
+        increment(&mut data[1..]);
+        println!("{:?}", data); // [1, 3, 4]
+    }
+    ```

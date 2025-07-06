@@ -27,6 +27,9 @@ fn main() {
         "var" => modules::var::var(),
         "controle" => controle::controle(),
         "array" => array::array(),
+        "slice" => modules::slice::slice(),
+        "struct" => modules::struct_::struct_(),
+        "enum" => modules::enum_::enum_(),
         _ => println!("Unkown name : {}", nom),
     }
 }

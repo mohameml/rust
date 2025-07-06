@@ -1,1 +1,0 @@
-/home/mohameml/github/02_Info/01_programmation/08_rust/rust/Cours/01_Introduction/example2/hello_world/target/debug/hello_world: /home/mohameml/github/02_Info/01_programmation/08_rust/rust/Cours/01_Introduction/example2/hello_world/src/main.rs
