@@ -57,5 +57,5 @@ fn smart_calc(with_loop: bool, print_input: bool, print_tokens: bool, print_arbr
 }
 
 fn main() {
-    smart_calc(true, true, true, true);
+    smart_calc(true, false, false , true);
 }
