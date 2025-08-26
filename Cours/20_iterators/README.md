@@ -180,3 +180,117 @@ while let Some(x) = it.next() {
     ```rust
     type Transform = fn(i32) -> i32;
     ```
+
+## 3. **trait `Iterator`:**
+
+### 3.1. **Le trait `Iterator`:**
+
+-   **Définition:**
+
+    Le **trait `Iterator`** est au coeur du système d’itération en Rust. Il est défini comme suit :
+
+    ```rust
+    pub trait Iterator {
+        type Item;
+        fn next(&mut self) -> Option<Self::Item>;
+    }
+    ```
+
+-   **syntaxe:**
+
+    ```rust
+    struct MyStruct;
+
+    impl Iterator for MyStruct {
+        type Item = MyType;
+
+        fn next(&mut self) -> Option<Self::Item> {
+            // logique d'itération
+        }
+    }
+    ```
+
+### 3.2. **Le trait `IntoIterator`:**
+
+-   **Définition:**
+
+    Le trait `IntoIterator` est utilisé pour **transformer un objet en itérateur**.
+
+    ```rust
+    pub trait IntoIterator {
+        type Item;
+        type IntoIter: Iterator<Item = Self::Item>;
+
+        fn into_iter(self) -> Self::IntoIter;
+    }
+    ```
+
+### 3.3. **Implémentation d’un itérateur personnalisé:**
+
+> Créer notre **propre structure** qui peut être utilisée avec une boucle `for` ou manuellement avec `.next()`.
+
+-   **Exemple:**
+
+    -   **struct:**
+
+        ```rust
+        struct Counter {
+            current: u32,
+            max: u32,
+        }
+        ```
+
+    -   **iterator:**
+
+        ```rust
+        impl Iterator for Counter {
+            type Item = u32;
+
+            fn next(&mut self) -> Option<Self::Item> {
+                if self.current <= self.max {
+                    let res = self.current;
+                    self.current += 1;
+                    Some(res)
+                } else {
+                    None
+                }
+            }
+        }
+        ```
+
+    -   **intro_iterator:**
+
+        ```rust
+        impl IntoIterator for Counter {
+            type Item = u32;
+            type IntoIter = Self;
+
+            fn into_iter(self) -> Self::IntoIter {
+                self
+            }
+        }
+        ```
+
+    -   \*\*main
+
+    ```rust
+    fn main() {
+        let counter = Counter { current: 1, max: 5 };
+
+        for i in counter {
+            println!("{}", i);  // Affiche 1 à 5
+        }
+    }
+    ```
+
+---
+
+## 🧠 À retenir
+
+-   `Iterator` = comportement de l’itérateur (comment produire les éléments).
+-   `IntoIterator` = conversion d’un objet en itérateur (utilisé dans les boucles `for`).
+-   Implémenter ces deux traits vous permet de **créer des structures itérables personnalisées** très puissantes.
+
+---
+
+Souhaites-tu qu’on continue avec une **Section 4** sur les **méthodes adaptatrices des itérateurs** (`map`, `filter`, `take`, `enumerate`, `collect`, etc.) ?

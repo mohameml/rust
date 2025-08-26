@@ -12,6 +12,10 @@ impl Counter {
             curr_value: 0,
         }
     }
+
+    fn iter(self) -> Self {
+        self
+    }
 }
 
 impl Iterator for Counter {
@@ -70,7 +74,7 @@ fn main() {
 
     let c = Counter::new(10);
 
-    for val in c {
+    for val in c.iter() {
         println!("{}", val);
     }
 
